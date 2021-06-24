@@ -1,28 +1,24 @@
 import axios from 'axios'
+import { Message } from 'element-ui'
 const service = axios.create({
-  baseURL: 'baseURL',
-  timeout: 'timeout',
-  headers: 'headers'
+  baseURL: process.env.VUE_APP_BASE_API,
+  timeout: 5000
 })
 // 请求拦截器
-service.interceptors.request.use(
-  config => {
-    // Do something before request is sent
-    return config
-  },
-  error => {
-    // Do something with request error
-    return Promise.reject(error)
-  }
-)
+service.interceptors.request.use()
 // 响应拦截器
 service.interceptors.response.use(
   response => {
-    // Do something before response is sent
-    return response
+    const { success, message, data } = response.data
+    if (success) {
+      return data
+    } else {
+      Message.error(message)
+      return Promise.reject(new Error(message))
+    }
   },
   error => {
-    // Do something with response error
+    Message.error(error.message)
     return Promise.reject(error)
   }
 )
