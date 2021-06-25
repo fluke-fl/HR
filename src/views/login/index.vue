@@ -12,8 +12,18 @@
             label-position="left"
           >
             <div class="title-container">
-              <h3 class="title">
-                <img src="@/assets/common/login-logo.png" alt="">
+              <h3 class="title" style="font-family:'华文彩云';font-size:40px">
+                <!-- <img src="@/assets/common/login-logo.png" alt=""> -->
+                <span style="color:#f1c40f">上</span>
+                <span style="color:#19bc9c">古</span>
+                <span style="color:#4608ad">异</span>
+                <span style="color:#30cc71">兽</span>
+                <span style="color:#4285f4">纔</span>
+                <span style="color:#e84c3c">墟</span>
+                <span style="color:#b972e3">鲲</span>
+                <!-- <span style="color:#80c342">的</span>
+                <span style="color:#f1d09c">琨</span>
+                <span style="color:#2ec1da">琨</span> -->
               </h3>
             </div>
 
@@ -77,9 +87,12 @@
         class="fillWidth"
         @canplay="canplay"
       >
-        <source src="@/assets/flag2.mp4" type="video/mp4">
+        <source src="@/assets/flag4.mp4" type="video/mp4">
         浏览器不支持 video 标签，建议升级浏览器。
-        <source src="PATH_TO_WEBM" type="video/webm">
+        <!-- <source
+          src="https://vd2.bdstatic.com/mda-kf7tmqgmdgvd4hmh/hd/mda-kf7tmqgmdgvd4hmh.mp4?v_from_s=hkapp-haokan-hna&auth_key=1624534168-0-0-0ea296cfcec98da3a931f38ec05d1b8b&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest="
+          type="video/webm"
+        > -->
         浏览器不支持 video 标签，建议升级浏览器。
       </video>
       <div v-if="!vedioCanPlay" class="poster hidden">
