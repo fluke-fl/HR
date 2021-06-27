@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      defaultImg: require('@/assets/common/head.jpg')
+      defaultImg: require('@/assets/common/img.jpeg')
     }
   },
   computed: {
