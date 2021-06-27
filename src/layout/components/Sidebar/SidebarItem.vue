@@ -21,7 +21,7 @@
       </app-link>
     </template>
 
-    <el-submenu
+    <!-- <el-submenu
       v-else
       ref="subMenu"
       :index="resolvePath(item.path)"
@@ -43,7 +43,7 @@
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
-    </el-submenu>
+    </el-submenu> -->
   </div>
 </template>
 
