@@ -74,7 +74,7 @@
             >登录</el-button>
 
             <div class="tips">
-              <span style="margin-right:20px;">账号: 13800000002</span>
+              <span style="margin-right:20px;">账号: 13800000003</span>
               <span> 密码: 123456</span>
             </div>
           </el-form>
@@ -124,7 +124,7 @@ export default {
     }
     return {
       loginForm: {
-        mobile: '13800000002',
+        mobile: '13800000003',
         password: '123456'
       },
       loginRules: {
@@ -243,7 +243,7 @@ $cursor: #fff;
       padding: 12px 5px 12px 15px;
       color: #000;
       height: 47px;
-      caret-color: $cursor;
+      caret-color: #000;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;

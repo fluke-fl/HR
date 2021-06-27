@@ -17,6 +17,7 @@ Vue.use(vueParticleLine)
 import '@/icons' // icon
 import '@/permission' // permission control
 import Ripple from 'vue-ripple-directive'
+import * as directives from '@/directives'
 
 Vue.directive('ripple', Ripple)
 // set ElementUI lang to EN
@@ -24,6 +25,9 @@ Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, directives[key])
+})
 Vue.config.productionTip = false
 
 new Vue({
