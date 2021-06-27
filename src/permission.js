@@ -1,12 +1,30 @@
 import router from '@/router'
 import store from '@/store'
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const wList = ['/login', '/404']
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
+  nprogress.start()
   if (store.getters.token) {
-    to.path === '/login' ? next('/') : next()
+    if (to.path === '/login') {
+      next('/')
+    } else {
+      if (!store.getters.useId) {
+        await store.dispatch('user/getInfo')
+      }
+      next()
+    }
   } else {
-    wList.indexOf(to.path) > -1 ? next() : next('/login')
+    if (wList.indexOf(to.path) > -1) {
+      next()
+    } else {
+      next('/login')
+    }
   }
+  nprogress.done()
 })
-router.afterEach()
+
+router.afterEach(() => {
+  nprogress.done()
+})
