@@ -1,6 +1,10 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}---首页</div>
+    <page-tools :show="true">
+      <el-button slot="after">+</el-button>
+      <span slot="before">AAAA</span>
+    </page-tools>
   </div>
 </template>
 

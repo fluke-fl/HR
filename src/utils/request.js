@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getTimeStamp } from './auth'
+import { getTimeStamp, removeTimeStamp, removeToken } from './auth'
 import router from '@/router'
-const timeOut = 3500
+const timeOut = 2 * 60 * 60
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -14,6 +14,8 @@ service.interceptors.request.use(
   config => {
     if (store.getters.token) {
       if (checkTime()) {
+        removeTimeStamp()
+        removeToken()
         store.dispatch('user/loginout')
         router.push('/login')
         return Promise.reject(new Error('密钥过期了'))

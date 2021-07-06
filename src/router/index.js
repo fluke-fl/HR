@@ -68,8 +68,21 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
+        // import 懒加载
         component: () => import('@/views/dashboard/index'),
         meta: { title: '首页', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/import',
+    component: Layout,
+    hidden: true,
+    name: 'import',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/import')
       }
     ]
   },

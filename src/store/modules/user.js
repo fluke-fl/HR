@@ -1,4 +1,10 @@
-import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
+import {
+  getToken,
+  setToken,
+  removeToken,
+  setTimeStamp,
+  removeTimeStamp
+} from '@/utils/auth'
 import { login, getInfo, getUserDetailById } from '@/api/user'
 export default {
   namespaced: true,
@@ -20,6 +26,9 @@ export default {
     },
     removeInfo(state) {
       state.userInfo = {}
+    },
+    removeTimeStamp(state) {
+      removeTimeStamp()
     }
   },
   actions: {
@@ -38,6 +47,7 @@ export default {
     loginout({ commit }) {
       commit('removeToken')
       commit('removeInfo')
+      commit('removeTimeStamp')
     }
   }
 }

@@ -20,3 +20,6 @@ export function getTimeStamp() {
 export function setTimeStamp() {
   Cookies.set(TimeKey, Date.now())
 }
+export function removeTimeStamp() {
+  return Cookies.remove(TimeKey)
+}
