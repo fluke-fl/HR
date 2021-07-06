@@ -51,6 +51,8 @@
         <addPermission
           :dialog-visible.sync="dialogVisible"
           :node="node"
+          :is-see.sync="isSee"
+          :is-add.sync="isAdd"
           @addPermission="getPermission"
         />
       </el-card>
@@ -70,7 +72,9 @@ export default {
     return {
       permissionList: [],
       dialogVisible: false,
-      node: null
+      node: null,
+      isSee: true,
+      isAdd: true
     }
   },
   created() {
@@ -79,18 +83,22 @@ export default {
   methods: {
     async getPermission() {
       this.permissionList = listToTree(await getPermission(), '0')
-      console.log(this.permissionList)
+      // console.log(this.permissionList)
     },
     showDialog() {
       this.dialogVisible = true
+      this.isAdd = true
     },
     showDialog1(node) {
+      this.isSee = false
       this.node = node
+      this.isAdd = true
       this.dialogVisible = true
     },
     editPermission(node) {
       this.dialogVisible = true
-      // console.log(node)
+      this.isAdd = false
+      this.isSee = true
       this.node = node
     },
     async delPermission(id) {

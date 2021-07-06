@@ -6,7 +6,12 @@
           <span> 有{{ page.total }}记录 </span>
         </template>
         <template v-slot:after>
-          <el-button type="success" size="small" icon="el-icon-folder-opened">
+          <el-button
+            type="success"
+            size="small"
+            icon="el-icon-folder-opened"
+            @click="exportExcel"
+          >
             excel导出
           </el-button>
           <el-button
@@ -147,9 +152,10 @@
 
 <script>
 import { getEmployeesList, delEmployee } from '@/api/employees'
-import EmployeeEnum from '@/api/constant/employees'
+// import EmployeeEnum from '@/api/constant/employees'
 import addEmployee from './components/addEmployee.vue'
 import assignRole from './components/assignRole.vue'
+import { formatDate } from '@/filters'
 
 export default {
   components: {
@@ -184,8 +190,8 @@ export default {
     },
     // 处理聘用形式
     formatEmployment(row, column, cellValue, index) {
-      const obj = EmployeeEnum.hireType.find(item => item.id === +cellValue)
-      return obj ? obj.value : '未知'
+      const obj = { 1: '正式', 2: '非正式' }
+      return obj[cellValue] || '未知'
     },
     async delEmployee(id) {
       await delEmployee(id)
@@ -199,6 +205,44 @@ export default {
       this.id = id
       await this.$refs.assignRole.getEmployee(id)
       this.roleVisible = true
+    },
+    exportExcel() {
+      import('@/vendor/Export2Excel').then(async excel => {
+        const headers = {
+          手机号: 'mobile',
+          姓名: 'username',
+          入职日期: 'timeOfEntry',
+          聘用形式: 'formOfEmployment',
+          转正日期: 'correctionTime',
+          工号: 'workNumber',
+          部门: 'departmentName'
+        }
+        const { rows } = await getEmployeesList({
+          page: 1,
+          size: this.page.total
+        })
+        const data = this.formatJosn(headers, rows)
+        excel.export_json_to_excel({
+          header: Object.keys(headers),
+          data
+        })
+      })
+    },
+    formatJosn(headers, rows) {
+      return rows.map(item => {
+        return Object.keys(headers).map(key => {
+          if (
+            headers[key] === 'timeOfEntry' ||
+            headers[key] === 'correctionTime'
+          ) {
+            return formatDate(item[headers[key]])
+          } else if (headers[key] === 'formOfEmployment') {
+            const obj = { 1: '正式', 2: '非正式' }
+            return obj[item[headers[key]]] || '未知'
+          }
+          return item[headers[key]]
+        })
+      })
     }
   }
 }

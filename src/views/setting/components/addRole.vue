@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="showText + '角色'"
+    :title="isAdd ? '新增角色' : '编辑角色'"
     :visible="dialogVisible"
     width="600px"
     @close="cancel"
@@ -36,6 +36,10 @@ export default {
     node: {
       type: Object,
       default: null
+    },
+    isAdd: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -56,22 +60,16 @@ export default {
       }
     }
   },
-  computed: {
-    showText() {
-      if (!this.node) {
-        return this.ruleForm.id ? '编辑' : '新增'
-      } else {
-        return this.node.id ? '编辑' : '新增'
-      }
-    }
-  },
   updated() {
-    this.ruleForm = this.node
+    if (this.node) {
+      this.ruleForm = this.node
+    }
   },
   methods: {
     cancel() {
       this.$emit('addRole')
       this.$emit('update:dialog-visible', false)
+      this.$emit('update:node', null)
       this.$refs['ruleForm'].resetFields()
     },
     btnOk(formName) {

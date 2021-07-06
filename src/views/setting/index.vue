@@ -112,7 +112,7 @@
         <!-- 添加角色弹出层 -->
         <add-role
           :dialog-visible.sync="dialogVisible"
-          :node="node"
+          :node.sync="node"
           :is-add="isAdd"
           @addRole="getRolesList"
         />

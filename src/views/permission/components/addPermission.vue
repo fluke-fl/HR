@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="showText + '权限'"
+    :title="isAdd ? '新增权限点' : '编辑权限点'"
     :visible="dialogVisible"
     width="600px"
     @close="cancel"
@@ -57,6 +57,14 @@ export default {
     node: {
       type: Object,
       default: null
+    },
+    isSee: {
+      type: Boolean,
+      default: true
+    },
+    isAdd: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -77,17 +85,11 @@ export default {
       }
     }
   },
-  computed: {
-    showText() {
-      if (!this.node) {
-        return this.ruleForm.id ? '编辑' : '新增'
-      } else {
-        return this.node.id ? '编辑' : '新增'
-      }
-    }
-  },
   updated() {
-    this.ruleForm = this.node
+    // console.log(this.isSee)
+    if (this.node && this.isSee) {
+      this.ruleForm = this.node
+    }
   },
   methods: {
     cancel() {
@@ -98,24 +100,23 @@ export default {
     addPermission(formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
-          if (this.ruleForm.id) {
+          if (this.ruleForm.id && this.isSee) {
             await updataPermission(this.ruleForm)
             this.$message('更新成功')
-            this.$refs[formName].resetFields()
           } else {
-            if (!this.node) {
-              await addPermission({ ...this.ruleForm, pid: '0', type: 1 })
-            } else {
+            if (this.node) {
               // console.log(this.ruleForm)
               await addPermission({
                 ...this.ruleForm,
                 pid: this.node.id,
                 type: 2
               })
+            } else {
+              await addPermission({ ...this.ruleForm, pid: '0', type: 1 })
             }
             this.$message('添加成功')
-            this.$refs[formName].resetFields()
           }
+          this.$refs[formName].resetFields()
           this.$emit('addPermission')
           this.$emit('update:dialog-visible', false)
         } else {
