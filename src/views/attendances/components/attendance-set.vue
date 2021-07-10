@@ -1,7 +1,11 @@
 <template>
   <div class="add-form">
     <el-dialog title="设置" :visible.sync="dialogFormVisible">
-      <el-tabs v-model="activeName" style="margin-left:20px" @tab-click="handleClick">
+      <el-tabs
+        v-model="activeName"
+        style="margin-left:20px"
+        @tab-click="handleClick"
+      >
         <el-tab-pane label="出勤设置" name="first">
           <el-form
             ref="dataForm"
@@ -13,7 +17,11 @@
             class="titmInfo"
           >
             <el-form-item label="部门：" prop="departmentId">
-              <el-select v-model="formBase.departmentId" placeholder="请选择" @change="handleChange">
+              <el-select
+                v-model="formBase.departmentId"
+                placeholder="请选择"
+                @change="handleChange"
+              >
                 <el-option
                   v-for="item in departmentData"
                   :key="item.id"
@@ -66,7 +74,10 @@
             </el-form-item>
           </el-form>
           <div class="el-dialog__footer dialog-footer">
-            <el-button type="primary" @click="handleAttendance">保存更新</el-button>
+            <el-button
+              type="primary"
+              @click="handleAttendance"
+            >保存更新</el-button>
             <el-button @click="handleClose">取消</el-button>
           </div>
         </el-tab-pane>
@@ -95,7 +106,11 @@
             </el-form-item>
           </el-form>
           <p>假期类型</p>
-          <el-table ref="singleTable" :data="stateData.type" style="width: 100%">
+          <el-table
+            ref="singleTable"
+            :data="stateData.type"
+            style="width: 100%"
+          >
             <el-table-column prop="name" label="类型" width="200" />
             <el-table-column label="是否可用">
               <template slot-scope="scope">
@@ -144,7 +159,11 @@
               </el-select>
             </el-form-item>
           </el-form>
-          <el-table ref="singleTable" :data="stateData.departmentType" style="width: 100%">
+          <el-table
+            ref="singleTable"
+            :data="stateData.departmentType"
+            style="width: 100%"
+          >
             <el-table-column>
               <template slot-scope="scope">
                 <div>
@@ -153,11 +172,14 @@
                     v-model="scope.row.isEnable"
                     active-color="#13ce66"
                     inactive-color="#ff4949"
-                    @change="handleStatus($event,scope.row)"
+                    @change="handleStatus($event, scope.row)"
                   />
                 </div>
 
-                <div v-if="scope.row.dedTypeCode==='51000'" class="attentInfo">
+                <div
+                  v-if="scope.row.dedTypeCode === '51000'"
+                  class="attentInfo"
+                >
                   <p>
                     迟到≤
                     <el-input
@@ -198,7 +220,11 @@
                   </div>
                   <p>
                     迟到>
-                    <el-input v-model="scope.row.periodLowerLimit" class="inputInfo" disabled />分钟
+                    <el-input
+                      v-model="scope.row.periodLowerLimit"
+                      class="inputInfo"
+                      disabled
+                    />分钟
                   </p>
                   <div class="deductionInfo">
                     <p>
@@ -216,7 +242,10 @@
                     </p>
                   </div>
                 </div>
-                <div v-if="scope.row.dedTypeCode==='52000'" class="attentInfo">
+                <div
+                  v-if="scope.row.dedTypeCode === '52000'"
+                  class="attentInfo"
+                >
                   <p>
                     早退≤
                     <el-input
@@ -242,7 +271,11 @@
                     </p>
                     <p>
                       早退>
-                      <el-input v-model="scope.row.timesLowerLimit" class="inputInfo" disabled />次，每次扣款
+                      <el-input
+                        v-model="scope.row.timesLowerLimit"
+                        class="inputInfo"
+                        disabled
+                      />次，每次扣款
                       <el-input
                         v-model="scope.row.dedAmonutLowerLimit"
                         class="inputInfo"
@@ -252,7 +285,11 @@
                   </div>
                   <p>
                     早退>
-                    <el-input v-model="scope.row.periodLowerLimit" class="inputInfo" disabled />分钟
+                    <el-input
+                      v-model="scope.row.periodLowerLimit"
+                      class="inputInfo"
+                      disabled
+                    />分钟
                   </p>
                   <div style="padding-left:120px;">
                     <p>
@@ -270,7 +307,10 @@
                     </p>
                   </div>
                 </div>
-                <div v-if="scope.row.dedTypeCode==='53000'" class="attentInfo">
+                <div
+                  v-if="scope.row.dedTypeCode === '53000'"
+                  class="attentInfo"
+                >
                   <p>
                     矿工按
                     <el-input
@@ -284,7 +324,10 @@
             </el-table-column>
           </el-table>
           <div class="el-dialog__footer dialog-footer">
-            <el-button type="primary" @click="handleDeductions">保存更新</el-button>
+            <el-button
+              type="primary"
+              @click="handleDeductions"
+            >保存更新</el-button>
             <el-button @click="handleClose">取消</el-button>
           </div>
         </el-tab-pane>
@@ -295,7 +338,6 @@
             :rules="overtimeRule"
             label-width="110px"
           >
-
             <el-form-item label="部门：" prop="departmentId">
               <el-select
                 v-model="overtimeBase.departmentId"
@@ -311,7 +353,11 @@
               </el-select>
             </el-form-item>
             <el-form-item label="加班规则：">
-              <div v-for="item in overtimeBase.rules" :key="item.id" class="ruleInfo">
+              <div
+                v-for="item in overtimeBase.rules"
+                :key="item.id"
+                class="ruleInfo"
+              >
                 <el-row>
                   <el-col :span="8">
                     <div class="grid-content bg-purple">
@@ -322,7 +368,9 @@
                   <el-col :span="16">
                     <div class="grid-content bg-purple-light">
                       <span class="pad">
-                        <el-checkbox v-model="item.isTimeOff">调休假</el-checkbox>
+                        <el-checkbox
+                          v-model="item.isTimeOff"
+                        >调休假</el-checkbox>
                       </span>
                       <template>
                         <el-time-select
@@ -333,7 +381,7 @@
                             end: '23:59'
                           }"
                           style="width:100px;"
-                          :disabled="item.isTimeOff===false"
+                          :disabled="item.isTimeOff === false"
                         />
                         <el-time-select
                           v-model="item.ruleEndTime"
@@ -344,7 +392,7 @@
                             minTime: item.startTime
                           }"
                           style="width:100px;"
-                          :disabled="item.isTimeOff===false"
+                          :disabled="item.isTimeOff === false"
                         />
                       </template>
                     </div>
@@ -353,7 +401,9 @@
               </div>
             </el-form-item>
             <el-form-item label="打卡验证：" prop="isClock">
-              <el-switch v-model="overtimeBase.isClock" />&nbsp;&nbsp;加班需要有打卡记录
+              <el-switch
+                v-model="overtimeBase.isClock"
+              />&nbsp;&nbsp;加班需要有打卡记录
             </el-form-item>
             <el-form-item label="开启补偿：" prop="isCompensationint">
               <el-switch v-model="overtimeBase.isCompensationint" />
@@ -379,7 +429,10 @@
             </el-form-item>
           </el-form>
           <div class="el-dialog__footer dialog-footer">
-            <el-button type="primary" @click="handleOvertime">保存更新</el-button>
+            <el-button
+              type="primary"
+              @click="handleOvertime"
+            >保存更新</el-button>
             <el-button @click="handleClose">取消</el-button>
           </div>
         </el-tab-pane>
@@ -390,8 +443,8 @@
 
 <script>
 import { addEmployee } from '@/api/employees'
-import { getInteger, getIntegerPoint } from '@/filters'
-import { getDepartments } from '@/api/departments'
+import { numberFormatter, nFormatter } from '@/filters'
+import { getDepartmentList } from '@/api/departments'
 import {
   attendanceSave,
   getAttendance,
@@ -483,7 +536,7 @@ export default {
     // 业务方法
     // 获取部门
     async getDepartments() {
-      const { depts } = await getDepartments()
+      const { depts } = await getDepartmentList()
       this.departmentData = depts
       this.formBase.departmentId = this.leaveBase.departmentId = this.deductionsBase.departmentId = this.overtimeBase.departmentId = this.departmentData[0].id
       this.handleChange(this.leaveBase.departmentId)
@@ -544,15 +597,13 @@ export default {
       })
     },
     // 扣款选择部门
-    async  handleChangeDeductions(val) {
+    async handleChangeDeductions(val) {
       this.deductionsBase.departmentId = val
       this.stateData.departmentType.forEach(item => {
         item.departmentId = val
         item.isEnable = false
       })
-      const res = await getDeductions({ departmentId: val }).then(res => {
-
-      })
+      const res = await getDeductions({ departmentId: val }).then(res => {})
       res.forEach(item => {
         if (item.isEnable === 0) {
           item.isEnable = true
@@ -580,12 +631,11 @@ export default {
       const data = await getOvertime({ departmentId: val })
       if (data.dayOffConfigs !== null || data.extraDutyConfig !== null) {
         this.overtimeBase.departmentId = data.dayOffConfigs.departmentId
-        this.overtimeBase.latestEffectDate =
-              data.dayOffConfigs.latestEffectDate
+        this.overtimeBase.latestEffectDate = data.dayOffConfigs.latestEffectDate
         this.overtimeBase.unit = data.dayOffConfigs.unit
         this.overtimeBase.isClock = data.extraDutyConfig.isClock
         this.overtimeBase.isCompensationint =
-              data.extraDutyConfig.isCompensationint
+          data.extraDutyConfig.isCompensationint
       }
       if (this.overtimeBase.isClock === 0) {
         this.overtimeBase.isClock = true
@@ -614,7 +664,7 @@ export default {
       }
     },
     // 考勤配置保存更新
-    async  handleAttendance() {
+    async handleAttendance() {
       this.$refs.dataForm.validate(async valid => {
         if (valid) {
           await attendanceSave(this.formBase)
@@ -664,7 +714,7 @@ export default {
       this.$refs.overtimeForm.validate(async valid => {
         if (valid) {
           var deductionList = this.overtimeBase
-          deductionList.latestEffectDate = commonApi.transListToTreeData(
+          deductionList.latestEffectDate = commonApi.listToTree(
             deductionList.latestEffectDate
           )
           if (deductionList.isClock === true) {
@@ -721,11 +771,11 @@ export default {
     },
     // 验证输入正整数
     handleInput: function(e) {
-      getInteger(e, this.typeTip)
+      numberFormatter(e, this.typeTip)
     },
     // 获取小数点后1位
     handleInputPoint(e) {
-      getIntegerPoint(e)
+      nFormatter(e)
     },
     //
     handleStatus(e, obj) {
@@ -740,7 +790,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-.inputInfo{width: 50px;}
+.inputInfo {
+  width: 50px;
+}
 
 .attentInfo {
   p {

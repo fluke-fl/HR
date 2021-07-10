@@ -8,7 +8,7 @@
             v-model="levelData.enable"
             active-color="#13ce66"
             :inactive-color="inactiveColor"
-            @change="handleChange(levelData,$event)"
+            @change="handleChange(levelData, $event)"
           />
         </span>
         <i class="el-icon-setting" @click="setFlow('regular')" />
@@ -20,7 +20,7 @@
             v-model="overtimeData.enable"
             active-color="#13ce66"
             :inactive-color="inactiveColor"
-            @change="handleChange(overtimeData,$event)"
+            @change="handleChange(overtimeData, $event)"
           />
         </span>
         <i class="el-icon-setting" @click="setFlow('regular')" />
@@ -32,7 +32,7 @@
             v-model="dimissionData.enable"
             active-color="#13ce66"
             :inactive-color="inactiveColor"
-            @change="handleChange(dimissionData,$event)"
+            @change="handleChange(dimissionData, $event)"
           />
         </span>
         <i class="el-icon-setting" @click="setFlow('regular')" />
@@ -57,19 +57,18 @@
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="dialogVisible = false"
+        >确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {
-  saveSetState,
-  getFlowList,
-  suspend
-} from '@/api/approvals'
-import { importFilexml } from '@/filters'
+import { saveSetState, getFlowList, suspend } from '@/api/approvals'
+import { importFile } from '@/filters'
 import { getToken } from '@/utils/auth'
 export default {
   name: 'UsersTableIndex',
@@ -145,7 +144,7 @@ export default {
       this.$message.error(obj)
     },
     beforeUpload(file, obj) {
-      importFilexml(file, obj, this.typeTip)
+      importFile(file, obj, this.typeTip)
     },
     // 上传错误
     uploadFail(err, file, fileList) {
@@ -170,7 +169,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "./../../styles/variables";
+@import './../../styles/variables';
 $active: #13ce66;
 $inactive: #ccc;
 .securitySetting {

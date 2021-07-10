@@ -24,7 +24,12 @@
             </el-select>
           </el-form-item>
           <el-form-item label="出生日期">
-            <el-date-picker v-model="myInfo.dateOfBirth" type="date" format="yyyy-MM-dd" placeholder="选择日期" />
+            <el-date-picker
+              v-model="myInfo.dateOfBirth"
+              type="date"
+              format="yyyy-MM-dd"
+              placeholder="选择日期"
+            />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -39,7 +44,7 @@
 <script>
 import { getUserDetailById } from '@/api/user'
 import { updateUser } from '@/api/approvals'
-import { updatePersonal, getPersonalDetail } from '@/api/employees'
+import { putPersonInfo, getPersonInfo } from '@/api/employees'
 import { mapGetters } from 'vuex'
 export default {
   name: 'UsersTableIndex',
@@ -62,7 +67,7 @@ export default {
     async onSubmit() {
       const user = this.myInfo
       await updateUser(user)
-      await updatePersonal(user)
+      await putPersonInfo(user)
       this.$message.success('保存成功')
     },
     onCancel() {
@@ -71,7 +76,7 @@ export default {
     async getUserInfo() {
       this.loading = true
       const detailData = await getUserDetailById(this.userId)
-      const personData = await getPersonalDetail(this.userId)
+      const personData = await getPersonInfo(this.userId)
       detailData.sex = personData.sex
       detailData.dateOfBirth = personData.dateOfBirth
       this.myInfo = detailData
@@ -82,10 +87,10 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "@/styles/variables.scss";
+@import '@/styles/variables.scss';
 .myInfo {
   padding: 15px;
-  margin-top:15px;
+  margin-top: 15px;
   .myInfoTop {
     color: #666;
     background: #fff;
@@ -99,7 +104,7 @@ export default {
     }
     .act {
       color: $blue;
-      border-bottom: solid 2px  $blue;
+      border-bottom: solid 2px $blue;
     }
   }
   .myInfoCont {
