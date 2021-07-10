@@ -10,12 +10,18 @@ export default {
       // 二级路由不写路径则默认为一级路由的路径
       path: '',
       component: () => import('@/views/employees'),
+      name: 'employees',
       meta: { title: '员工管理', icon: 'people' }
     },
     {
       path: 'details/:id',
       hidden: true,
       component: () => import('@/views/employees/modules/details')
+    },
+    {
+      path: 'print/:id',
+      hidden: true,
+      component: () => import('@/views/employees/modules/print')
     }
   ]
 }

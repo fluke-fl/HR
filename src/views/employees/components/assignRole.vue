@@ -43,13 +43,13 @@ export default {
   },
   methods: {
     cancel() {
-      this.id = []
       this.$emit('update:dialog-visible', false)
+      this.$emit('update:id', null)
     },
     async btnOk(roleIds) {
       // console.log(roleIds)
       await assignRole({ id: this.id, roleIds })
-      this.$message('修改成功')
+      this.$message.success('修改成功')
       this.$emit('update:dialog-visible', false)
     },
     async getRolesList() {

@@ -27,6 +27,7 @@
               <el-dropdown-item
                 v-if="!isRoot"
                 command="edit"
+                :disabled="!checkPermission('point-dept')"
               >编辑部门</el-dropdown-item>
               <el-dropdown-item
                 v-if="!isRoot"

@@ -6,6 +6,7 @@ import {
   removeTimeStamp
 } from '@/utils/auth'
 import { login, getInfo, getUserDetailById } from '@/api/user'
+import { resetRouter } from '@/router'
 export default {
   namespaced: true,
   state: {
@@ -48,6 +49,8 @@ export default {
       commit('removeToken')
       commit('removeInfo')
       commit('removeTimeStamp')
+      resetRouter()
+      commit('permission/setRoutes', [], { root: true })
     }
   }
 }

@@ -1,16 +1,37 @@
-// 动态路由
+
 import Layout from '@/layout'
-export default {
+
+const attendRouter = {
   path: '/attendances',
-  name: 'attendances',
-  // 需要layout的布局 所以组件为layout
   component: Layout,
+  name: 'attendances',
   children: [
     {
-      // 二级路由不写路径则默认为一级路由的路径
       path: '',
       component: () => import('@/views/attendances'),
-      meta: { title: '考勤', icon: 'skill' }
+      name: 'attendances',
+      meta: {
+        title: '考勤',
+        icon: 'excel' }
+    },
+    {
+      path: 'archiving',
+      component: () => import('@/views/attendances/historical'),
+      name: 'archiving',
+      hidden: true,
+      meta: {
+        title: '归档'
+      }
+    },
+    {
+      path: 'report/:month',
+      component: () => import('@/views/attendances/report'),
+      name: 'reports',
+      hidden: true,
+      meta: {
+        title: '报表'
+      }
     }
   ]
 }
+export default attendRouter

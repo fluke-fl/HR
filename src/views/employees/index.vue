@@ -45,6 +45,16 @@
           width="140"
           align="center"
         />
+        <el-table-column label="头像" align="center" width="140">
+          <template slot-scope="{ row }">
+            <img
+              v-imageerror="defaultImg"
+              :src="row.staffPhoto"
+              style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+              @click="showQrCode(row.staffPhoto)"
+            >
+          </template>
+        </el-table-column>
         <!-- 手机号 -->
         <el-table-column
           label="手机号"
@@ -142,10 +152,19 @@
         @addEmployee="getEmployeesList"
       />
       <assign-role
-        :id="id"
+        :id.sync="id"
         ref="assignRole"
         :dialog-visible.sync="roleVisible"
       />
+      <el-dialog
+        title="二维码"
+        :visible.sync="showCodeDialog"
+        @close="imgUrl = ''"
+      >
+        <el-row type="flex" justify="center">
+          <canvas ref="myCanvas" />
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -156,6 +175,7 @@ import { getEmployeesList, delEmployee } from '@/api/employees'
 import addEmployee from './components/addEmployee.vue'
 import assignRole from './components/assignRole.vue'
 import { formatDate } from '@/filters'
+import QrCode from 'qrcode'
 
 export default {
   components: {
@@ -172,7 +192,9 @@ export default {
       },
       dialogVisible: false,
       roleVisible: false,
-      id: ''
+      id: '',
+      showCodeDialog: false,
+      defaultImg: require('@/assets/common/bigUserHeader.png')
     }
   },
   async created() {
@@ -243,6 +265,16 @@ export default {
           return item[headers[key]]
         })
       })
+    },
+    showQrCode(url) {
+      if (url) {
+        this.showCodeDialog = true // 数据更新了 但是页面的渲染是异步
+        this.$nextTick(() => {
+          QrCode.toCanvas(this.$refs.myCanvas, url) // 将地址转化成二维码
+        })
+      } else {
+        this.$message.warning('该用户还未上传头像')
+      }
     }
   }
 }

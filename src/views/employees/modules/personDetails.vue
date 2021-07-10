@@ -1,6 +1,13 @@
 <template>
   <div class="user-info">
     <!-- 个人信息 -->
+    <el-row type="flex" justify="end">
+      <el-tooltip content="打印个人基本信息">
+        <router-link :to="`/employees/print/${userId}?type=personal`">
+          <i class="el-icon-printer" />
+        </router-link>
+      </el-tooltip>
+    </el-row>
     <el-form label-width="220px">
       <!-- 工号 入职时间 -->
       <el-row class="inline-info">
@@ -58,6 +65,7 @@
         <el-col :span="12">
           <el-form-item label="员工头像">
             <!-- 放置上传图片 -->
+            <image-upload ref="staffPhoto" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -91,6 +99,7 @@
 
         <el-form-item label="员工照片">
           <!-- 放置上传图片 -->
+          <image-upload ref="mystaffPhoto" />
         </el-form-item>
         <el-form-item label="国家/地区">
           <el-select v-model="formData.nationalArea" class="inputW2">
@@ -470,17 +479,39 @@ export default {
   },
   methods: {
     async getPersonInfo() {
-      const res = await getPersonInfo(this.userId)
-      const res1 = await getEmployee(this.userId)
-      this.userInfo = res1
-      this.formData = res
+      this.userInfo = await getEmployee(this.userId)
+      this.formData = await getPersonInfo(this.userId)
+      if (this.userInfo.staffPhoto) {
+        this.$refs.staffPhoto.fileList = [
+          { url: this.userInfo.staffPhoto, upload: true }
+        ]
+      }
+      if (this.formData.staffPhoto) {
+        this.$refs.mystaffPhoto.fileList = [
+          { url: this.formData.staffPhoto, upload: true }
+        ]
+      }
     },
     async saveUser() {
-      await updataEmployee(this.userInfo)
+      const fileList = this.$refs.staffPhoto.fileList
+      if (fileList.some(item => !item.upload)) {
+        return this.$message.warning('图片未上传完成')
+      }
+      await updataEmployee({
+        ...this.userInfo,
+        staffPhoto: fileList.length ? fileList[0].url : ''
+      })
       this.$message('更新成功')
     },
     async savePersonal() {
-      await putPersonInfo(this.formData)
+      const fileList = this.$refs.mystaffPhoto.fileList
+      if (fileList.some(item => !item.upload)) {
+        return this.$message.warning('图片未上传完成')
+      }
+      await putPersonInfo({
+        ...this.formData,
+        staffPhoto: fileList.length ? fileList[0].url : ''
+      })
       this.$message('更新成功')
     }
   }

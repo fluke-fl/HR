@@ -35,7 +35,7 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
-        // target: 'http://192.168.13.54:3000',
+        // target: 'http://192.168.13.52:8888',
         target: 'http://ihrm-java.itheima.net/',
         changeOrigin: true
       }

@@ -10,6 +10,7 @@ export default {
       // 二级路由不写路径则默认为一级路由的路径
       path: '',
       component: () => import('@/views/departments'),
+      name: 'departments',
       meta: { title: '公司架构', icon: 'tree' }
     }
   ]

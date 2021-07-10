@@ -89,11 +89,6 @@
       >
         <source src="@/assets/flag4.mp4" type="video/mp4">
         浏览器不支持 video 标签，建议升级浏览器。
-        <!-- <source
-          src="https://vd2.bdstatic.com/mda-kf7tmqgmdgvd4hmh/hd/mda-kf7tmqgmdgvd4hmh.mp4?v_from_s=hkapp-haokan-hna&auth_key=1624534168-0-0-0ea296cfcec98da3a931f38ec05d1b8b&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest="
-          type="video/webm"
-        > -->
-        浏览器不支持 video 标签，建议升级浏览器。
       </video>
       <div v-if="!vedioCanPlay" class="poster hidden">
         <img :style="fixStyle" src="PATH_TO_JPEG" alt="">
