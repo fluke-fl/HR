@@ -25,15 +25,6 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    if (
-      error.response &&
-      error.response.data & (error.response.data.code === 1002)
-    ) {
-      store.dispatch('user/loginout')
-      router.push('/login')
-    } else {
-      Message.error(error.message)
-    }
     return Promise.reject(error)
   }
 )
@@ -49,7 +40,15 @@ service.interceptors.response.use(
     }
   },
   error => {
-    Message.error(error.message)
+    if (
+      error.response &&
+      error.response.data & (error.response.data.code === 1002)
+    ) {
+      store.dispatch('user/loginout')
+      router.push('/login')
+    } else {
+      Message.error(error.message)
+    }
     return Promise.reject(error)
   }
 )

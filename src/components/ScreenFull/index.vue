@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import Screenfull from 'screenfull'
 export default {
   data() {
     return {
@@ -17,13 +18,19 @@ export default {
   },
   methods: {
     changeScreen() {
-      if (!this.isFull) {
-        document.documentElement.requestFullscreen()
-        this.isFull = true
-      } else {
-        document.exitFullscreen()
-        this.isFull = false
+      // 原生方法
+      // if (!this.isFull) {
+      //   document.documentElement.requestFullscreen()
+      //   this.isFull = true
+      // } else {
+      //   document.exitFullscreen()
+      //   this.isFull = false
+      // }
+      if (!Screenfull.isEnabled) {
+        this.$message.warning('全屏不可用')
+        return
       }
+      Screenfull.toggle()
     }
   }
 }

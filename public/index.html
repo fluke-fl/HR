@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="icon" href="<%= BASE_URL %>favicon1.ico">
   <title><%= webpackConfig.name %></title>
+  <% for(var css of htmlWebpackPlugin.options.cdn.css) { %>
+  <link rel="stylesheet" href="<%=css%>">
+  <% } %>
 </head>
 
 <body>
@@ -16,6 +19,9 @@
   </noscript>
   <div id="app"></div>
   <!-- built files will be auto injected -->
+  <% for(var js of htmlWebpackPlugin.options.cdn.js) { %>
+  <script src="<%=js%>"></script>
+  <% } %>
 </body>
 
 </html>
